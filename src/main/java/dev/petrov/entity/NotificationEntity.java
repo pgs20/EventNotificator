@@ -13,7 +13,7 @@ public class NotificationEntity {
     @Column(name = "event_id", nullable = false)
     private Integer eventId;
     @Column(name = "created_at", nullable = false)
-    private String createdAt;
+    private LocalDateTime createdAt;
     @Column(name = "is_read", nullable = false)
     private boolean isRead;
     @Column(name = "field_update_name")
@@ -41,7 +41,7 @@ public class NotificationEntity {
         this.cost = cost;
         this.duration = duration;
         this.locationId = locationId;
-        this.createdAt = LocalDateTime.now().toString();
+        this.createdAt = LocalDateTime.now();
         this.isRead = false;
     }
 

@@ -6,8 +6,10 @@ import dev.petrov.entity.NotificationEntity;
 import dev.petrov.kafka.EventKafkaNotification;
 import dev.petrov.repository.NotificationRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,5 +54,12 @@ public class NotificationService {
                 notificationRepository.save(notification);
             });
         }
+    }
+
+    @Scheduled(fixedRate = 60000) // Запуск каждую минуту для теста
+    private void deleteOldNotifications() {
+        LocalDateTime oneMinuteAgo = LocalDateTime.now().minusMinutes(1); // Для теста взял 1 минуту
+        List<NotificationEntity> oldNotifications = notificationRepository.findByCreatedAtBefore(oneMinuteAgo);
+        notificationRepository.deleteAll(oldNotifications);
     }
 }
