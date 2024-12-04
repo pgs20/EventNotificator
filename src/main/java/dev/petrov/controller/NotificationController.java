@@ -2,11 +2,10 @@ package dev.petrov.controller;
 
 import dev.petrov.converter.ConverterNotification;
 import dev.petrov.dto.NotificationDto;
+import dev.petrov.dto.ReadNotification;
 import dev.petrov.service.NotificationService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,5 +31,12 @@ public class NotificationController {
                                 .map(converterNotification::toDto)
                                 .collect(Collectors.toList())
                 );
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> readNotifications(@RequestBody ReadNotification readNotification) {
+        notificationService.readNotifications(readNotification.notificationIds());
+
+        return ResponseEntity.ok().build();
     }
 }

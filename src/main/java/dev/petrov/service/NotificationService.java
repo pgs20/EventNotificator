@@ -2,6 +2,8 @@ package dev.petrov.service;
 
 import dev.petrov.converter.ConverterNotification;
 import dev.petrov.dto.Notification;
+import dev.petrov.entity.NotificationEntity;
+import dev.petrov.kafka.EventKafkaNotification;
 import dev.petrov.repository.NotificationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,28 @@ public class NotificationService {
                         .map(converterNotification::toDomain)
                         .collect(Collectors.toList()))
                 .orElseThrow(() -> new EntityNotFoundException("Непрочитанных нотификаций нет"));
+    }
+
+    public void saveEntity(EventKafkaNotification event) {
+        NotificationEntity entity = new NotificationEntity(
+                event.eventId(),
+                event.name().toString(),
+                event.maxPlaces().toString(),
+                event.date().toString(),
+                event.cost().toString(),
+                event.duration().toString(),
+                event.locationId().toString()
+        );
+
+        notificationRepository.save(entity);
+    }
+
+    public void readNotifications(List<Long> notificationIds) {
+        for (Long id : notificationIds) {
+            notificationRepository.findById(id).ifPresent(notification -> {
+                notification.setRead(true);
+                notificationRepository.save(notification);
+            });
+        }
     }
 }

@@ -21,11 +21,12 @@ public class KafkaConfig {
         Map<String, Object> configProperties = Map.of(
                 ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092",
                 ConsumerConfig.GROUP_ID_CONFIG, "notificator-group",
-                ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer.class);
+                ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer.class,
+                ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class,
+                JsonDeserializer.VALUE_DEFAULT_TYPE, EventKafkaNotification.class.getName()
+        );
 
         var factory = new DefaultKafkaConsumerFactory<Integer, EventKafkaNotification>(configProperties);
-
-        factory.setValueDeserializer(new JsonDeserializer<>(EventKafkaNotification.class, false));
 
         return factory;
     }

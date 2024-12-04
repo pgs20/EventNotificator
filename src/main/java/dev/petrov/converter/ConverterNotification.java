@@ -12,7 +12,12 @@ public class ConverterNotification {
         return new Notification(
                 entity.getId(),
                 entity.getEventId(),
-                entity.getFieldChange()
+                entity.getName(),
+                entity.getMaxPlaces(),
+                entity.getDate(),
+                entity.getCost(),
+                entity.getDuration(),
+                entity.getLocationId()
         );
     }
 
@@ -20,7 +25,12 @@ public class ConverterNotification {
         return new NotificationDto(
                 domain.idNotification(),
                 domain.idEvent(),
-                domain.fieldsChangeEvent()
+                domain.name(),
+                domain.maxPlaces(),
+                domain.date(),
+                domain.cost(),
+                domain.duration(),
+                domain.locationId()
         );
     }
 }
