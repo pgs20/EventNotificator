@@ -16,66 +16,29 @@ public class NotificationEntity {
     private LocalDateTime createdAt;
     @Column(name = "is_read", nullable = false)
     private boolean isRead;
-    @Column(name = "field_update_name")
-    private String name;
-    @Column(name = "field_update_max_places")
-    private String maxPlaces;
-    @Column(name = "field_update_date")
-    private String date;
-    @Column(name = "field_update_cost")
-    private String cost;
-    @Column(name = "field_update_duration")
-    private String duration;
-    @Column(name = "field_update_location_id")
-    private String locationId;
-
+    @Column(name = "status_event")
+    private String status;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "details_id")
+    private NotificationDetailsEntity details;
 
     public NotificationEntity() {
     }
 
-    public NotificationEntity(Integer eventId, String name, String maxPlaces, String date, String cost, String duration, String locationId) {
+    public NotificationEntity(Integer eventId, NotificationDetailsEntity details, String status) {
         this.eventId = eventId;
-        this.name = name;
-        this.maxPlaces = maxPlaces;
-        this.date = date;
-        this.cost = cost;
-        this.duration = duration;
-        this.locationId = locationId;
+        this.details = details;
+        this.status = status;
         this.createdAt = LocalDateTime.now();
         this.isRead = false;
     }
 
-    public Long getId() {
-        return id;
+    public NotificationDetailsEntity getDetails() {
+        return details;
     }
     public Integer getEventId() {
         return eventId;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getMaxPlaces() {
-        return maxPlaces;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getCost() {
-        return cost;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public String getLocationId() {
-        return locationId;
-    }
-
     public void setRead(boolean read) {
         isRead = read;
     }

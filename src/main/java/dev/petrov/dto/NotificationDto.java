@@ -1,13 +1,14 @@
 package dev.petrov.dto;
 
+import dev.petrov.kafka.FieldChange;
+
 public record NotificationDto(
-        Long idNotification,
         Integer idEvent,
-        String name,
-        String maxPlaces,
-        String date,
-        String cost,
-        String duration,
-        String locationId
+        FieldChange<String> name,
+        FieldChange<String> maxPlaces,
+        FieldChange<String> date,
+        FieldChange<String> cost,
+        FieldChange<String> duration,
+        FieldChange<String> locationId
 ){
 }

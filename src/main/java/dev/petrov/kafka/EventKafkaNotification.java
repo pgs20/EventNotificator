@@ -14,6 +14,7 @@ public record EventKafkaNotification(
         FieldChange<String> date,
         FieldChange<Integer> cost,
         FieldChange<Integer> duration,
-        FieldChange<Long> locationId
+        FieldChange<Long> locationId,
+        String status
 ) {
 }
