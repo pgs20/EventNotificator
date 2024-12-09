@@ -3,6 +3,7 @@ package dev.petrov.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "notifications")
@@ -18,14 +19,13 @@ public class NotificationEntity {
     private boolean isRead;
     @Column(name = "status_event")
     private String status;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "details_id")
-    private NotificationDetailsEntity details;
+    @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NotificationDetailsEntity> details;
 
     public NotificationEntity() {
     }
 
-    public NotificationEntity(Integer eventId, NotificationDetailsEntity details, String status) {
+    public NotificationEntity(Integer eventId, List<NotificationDetailsEntity> details, String status) {
         this.eventId = eventId;
         this.details = details;
         this.status = status;
@@ -33,13 +33,26 @@ public class NotificationEntity {
         this.isRead = false;
     }
 
-    public NotificationDetailsEntity getDetails() {
+    public List<NotificationDetailsEntity> getDetails() {
         return details;
     }
+
     public Integer getEventId() {
         return eventId;
     }
     public void setRead(boolean read) {
         isRead = read;
+    }
+
+    public void setEventId(Integer eventId) {
+        this.eventId = eventId;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setDetails(List<NotificationDetailsEntity> details) {
+        this.details = details;
     }
 }

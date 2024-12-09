@@ -1,6 +1,7 @@
 package dev.petrov.service;
 
 import dev.petrov.converter.ConverterNotification;
+import dev.petrov.converter.NotificationDetailsMapper;
 import dev.petrov.dto.Notification;
 import dev.petrov.entity.NotificationDetailsEntity;
 import dev.petrov.entity.NotificationEntity;
@@ -33,28 +34,9 @@ public class NotificationService {
     }
 
     public void saveEntity(EventKafkaNotification event) {
-        NotificationDetailsEntity details = new NotificationDetailsEntity(
-                event.name().getNewField(),
-                event.maxPlaces().getNewField().toString(),
-                event.date().getNewField(),
-                event.cost().getNewField().toString(),
-                event.duration().getNewField().toString(),
-                event.locationId().getNewField().toString(),
-                event.name().getOldField(),
-                event.maxPlaces().getOldField().toString(),
-                event.date().getOldField(),
-                event.cost().getOldField().toString(),
-                event.duration().getOldField().toString(),
-                event.locationId().getOldField().toString()
-        );
+        NotificationEntity entity = new NotificationEntity();
 
-        NotificationEntity entity = new NotificationEntity(
-                event.eventId(),
-                details,
-                event.status()
-        );
-
-        notificationRepository.save(entity);
+        notificationRepository.save(NotificationDetailsMapper.mapEventToNotificationDetails(event,entity));
     }
 
     public void readNotifications(List<Long> notificationIds) {

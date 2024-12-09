@@ -8,109 +8,50 @@ public class NotificationDetailsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "new_name")
-    private String newName;
-    @Column(name = "new_max_places")
-    private String newMaxPlaces;
-    @Column(name = "new_date")
-    private String newDate;
-    @Column(name = "new_cost")
-    private String newCost;
-    @Column(name = "new_duration")
-    private String newDuration;
-    @Column(name = "new_location_id")
-    private String newLocationId;
-    @Column(name = "old_name")
-    private String oldName;
-    @Column(name = "old_max_places")
-    private String oldMaxPlaces;
-    @Column(name = "old_date")
-    private String oldDate;
-    @Column(name = "old_cost")
-    private String oldCost;
-    @Column(name = "old_duration")
-    private String oldDuration;
-    @Column(name = "old_location_id")
-    private String oldLocationId;
+    @ManyToOne
+    @JoinColumn(name = "notification_id", nullable = false)
+    private NotificationEntity notification;
+    @Column(name = "field_name", nullable = false)
+    private String fieldName;
+    @Column(name = "old_value")
+    private String oldValue;
+    @Column(name = "new_value")
+    private String newValue;
 
     public NotificationDetailsEntity() {
     }
 
-    public NotificationDetailsEntity(
-            String newName,
-            String newMaxPlaces,
-            String newDate,
-            String newCost,
-            String newDuration,
-            String newLocationId,
-            String oldName,
-            String oldMaxPlaces,
-            String oldDate,
-            String oldCost,
-            String oldDuration,
-            String oldLocationId
-    ) {
-        this.newName = newName;
-        this.newMaxPlaces = newMaxPlaces;
-        this.newDate = newDate;
-        this.newCost = newCost;
-        this.newDuration = newDuration;
-        this.newLocationId = newLocationId;
-        this.oldName = oldName;
-        this.oldMaxPlaces = oldMaxPlaces;
-        this.oldDate = oldDate;
-        this.oldCost = oldCost;
-        this.oldDuration = oldDuration;
-        this.oldLocationId = oldLocationId;
+    public NotificationDetailsEntity(String fieldName, String oldValue, String newValue) {
+        this.fieldName = fieldName;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
     }
 
-    public String getNewName() {
-        return newName;
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public String getNewMaxPlaces() {
-        return newMaxPlaces;
+    public String getOldValue() {
+        return oldValue;
     }
 
-    public String getNewDate() {
-        return newDate;
+    public String getNewValue() {
+        return newValue;
     }
 
-    public String getNewCost() {
-        return newCost;
+    public void setNotification(NotificationEntity notification) {
+        this.notification = notification;
     }
 
-    public String getNewDuration() {
-        return newDuration;
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
-    public String getNewLocationId() {
-        return newLocationId;
+    public void setOldValue(String oldValue) {
+        this.oldValue = oldValue;
     }
 
-    public String getOldName() {
-        return oldName;
+    public void setNewValue(String newValue) {
+        this.newValue = newValue;
     }
-
-    public String getOldMaxPlaces() {
-        return oldMaxPlaces;
-    }
-
-    public String getOldDate() {
-        return oldDate;
-    }
-
-    public String getOldCost() {
-        return oldCost;
-    }
-
-    public String getOldDuration() {
-        return oldDuration;
-    }
-
-    public String getOldLocationId() {
-        return oldLocationId;
-    }
-
-
 }
